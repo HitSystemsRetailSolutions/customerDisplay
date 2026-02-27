@@ -9,14 +9,14 @@
           <path d="M16 10a4 4 0 0 1-8 0"></path>
         </svg>
       </div>
-      <h1 class="welcome-title">Bienvenidos a<br/>{{ parametros?.nombreTienda || parametros?.nombreEmpresa || 'nuestro restaurante' }}</h1>
-      <p class="welcome-subtitle">Estamos encantados de atenderle</p>
+      <h1 class="welcome-title">{{ $t('visor.welcomeTo','Bienvenidos a') }}<br/>{{ parametros?.nombreTienda || parametros?.nombreEmpresa || $t('visor.restaurant','nuestro restaurante') }}</h1>
+      <p class="welcome-subtitle">{{ $t('visor.happyToServe','Estamos encantados de atenderle') }}</p>
     </div>
     <!-- Footer clock -->
     <div class="payment-footer">
       <div class="footer-clock">{{ currentTime }}</div>
       <div class="footer-branding">
-        <span>Desarrollado por</span>
+        <span>{{ $t('visor.developedBy','Desarrollado por') }}</span>
         <img src="/img/logo-hitsystems.png" alt="Hit Systems" class="hit-logo" onerror="this.style.display='none'" />
       </div>
     </div>

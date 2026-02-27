@@ -13,7 +13,7 @@
             <path d="M16 10a4 4 0 0 1-8 0"></path>
           </svg>
         </div>
-        <h2 class="payment-title">TOTAL A PAGAR</h2>
+        <h2 class="payment-title">{{ $t('visor.totalToPay','TOTAL A PAGAR') }}</h2>
       </div>
 
       <!-- Big price -->
@@ -23,7 +23,7 @@
       </div>
 
       <!-- Payment method options -->
-      <p class="payment-question">¿Cómo desea pagar?</p>
+      <p class="payment-question">{{ $t('visor.howDoYouWantToPay','¿Cómo desea pagar?') }}</p>
       <div class="payment-methods">
         <div class="method-card" :class="{ 'active': modalPago.metodoPago === 'EFECTIVO' }">
           <div class="method-icon">
@@ -34,7 +34,7 @@
               <path d="M6 12h.01M18 12h.01"/>
             </svg>
           </div>
-          <span>Efectivo</span>
+          <span>{{ $t('visor.cash','Efectivo') }}</span>
         </div>
         <div class="method-card" :class="{ 'active': modalPago.metodoPago === 'TARJETA' }">
           <div class="method-icon">
@@ -45,7 +45,7 @@
               <line x1="6" y1="15" x2="10" y2="15"/>
             </svg>
           </div>
-          <span>Tarjeta</span>
+          <span>{{ $t('visor.card','Tarjeta') }}</span>
         </div>
       </div>
     </div>
@@ -54,7 +54,7 @@
     <div class="payment-footer">
       <div class="footer-clock">{{ currentTime }}</div>
       <div class="footer-branding">
-        <span>Desarrollado por</span>
+        <span>{{ $t('visor.developedBy','Desarrollado por') }}</span>
         <img src="/img/logo-hitsystems.png" alt="Hit Systems" class="hit-logo" onerror="this.style.display='none'" />
       </div>
     </div>

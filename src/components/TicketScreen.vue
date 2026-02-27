@@ -4,30 +4,44 @@
       <div class="brand">
         <div class="logo-icon" :class="{ 'no-bg': logoTpv }">
           <img v-if="logoTpv" :src="`data:image/${logoTpv.extension};base64,${logoTpv.archivo}`" class="hit-logo-img" />
-          <svg v-else viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg
+            v-else
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round">
             <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
             <path d="M3 6h18"></path>
             <path d="M16 10a4 4 0 0 1-8 0"></path>
           </svg>
         </div>
         <div class="brand-text">
-          <h1>{{ parametros?.nombreTienda || parametros?.nombreEmpresa || 'Mi Pedido' }}</h1>
-          <p>{{ (parametros?.nombreTienda || parametros?.nombreEmpresa) ? 'Visor de Cliente' : 'Bienvenidos' }}</p>
+          <h1>{{ parametros?.nombreTienda || parametros?.nombreEmpresa || $t("visor.myOrder", "Mi Pedido") }}</h1>
+          <p>
+            {{
+              parametros?.nombreTienda || parametros?.nombreEmpresa
+                ? $t("visor.customerDisplay", "Visor de Cliente")
+                : $t("visor.welcome", "Bienvenidos")
+            }}
+          </p>
         </div>
       </div>
       <div class="status-badge" :class="connected ? 'online' : 'offline'">
         <span class="dot"></span>
-        {{ connected ? 'En Línea' : 'Reconectando' }}
+        {{ connected ? $t("visor.online", "En Línea") : $t("visor.reconnecting", "Reconectando") }}
       </div>
     </header>
 
     <main class="content-grid">
       <section class="items-list-container" ref="cartList">
         <div class="section-header">
-          <h2>Artículos</h2>
+          <h2>{{ $t("visor.articles", "Artículos") }}</h2>
           <span class="count-badge">{{ totalUnidades }}</span>
         </div>
-        
+
         <div class="scroll-area">
           <transition-group name="list-stagger" tag="div" class="items-grid">
             <div v-for="item in orderedList" :key="item.instanceId || item.idArticulo" class="item-card">
@@ -35,7 +49,7 @@
               <div class="item-info">
                 <div class="item-main-content">
                   <h3 class="item-name">{{ item.nombre }}</h3>
-                  
+
                   <!-- Enhanced Integrated Supplements -->
                   <div v-if="item.arraySuplementos && item.arraySuplementos.length > 0" class="item-sub-list">
                     <div v-for="(sup, sIdx) in item.arraySuplementos" :key="'sup-' + sIdx" class="sub-entry">
@@ -48,10 +62,17 @@
                   </div>
 
                   <!-- Integrated Promotion Items -->
-                  <div v-if="item.promocion && item.promocion.grupos && item.promocion.grupos.length > 0" class="item-sub-list promo-items">
+                  <div
+                    v-if="item.promocion && item.promocion.grupos && item.promocion.grupos.length > 0"
+                    class="item-sub-list promo-items">
                     <template v-for="(grupo, gIdx) in item.promocion.grupos">
                       <div v-for="(pItem, pIdx) in grupo" :key="'pitem-' + gIdx + '-' + pIdx" class="sub-entry">
-                        <svg class="sub-bullet promo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <svg
+                          class="sub-bullet promo"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2.5">
                           <polyline points="20 6 9 17 4 12"></polyline>
                         </svg>
                         <span class="p-qty" v-if="pItem.unidades > 1">{{ pItem.unidades }}x</span> {{ pItem.nombre }}
@@ -63,13 +84,26 @@
               </div>
             </div>
           </transition-group>
-          
+
           <div v-if="currentTicket.lista.length === 0" class="empty-state">
             <div class="empty-illustration">
-              <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="80"
+                height="80"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
+                <path d="M3 6h18" />
+                <path d="M16 10a4 4 0 0 1-8 0" />
+              </svg>
             </div>
-            <h3>Esperando artículos</h3>
-            <p>La información de su ticket aparecerá aquí.</p>
+            <h3>{{ $t("visor.waitingForItems", "Esperando artículos") }}</h3>
+            <p>{{ $t("visor.ticketInfoWillAppearHere", "La información de su ticket aparecerá aquí.") }}</p>
           </div>
         </div>
       </section>
@@ -77,13 +111,13 @@
       <aside class="summary-panel">
         <div class="summary-card">
           <div class="summary-row header-row">
-            <span>RESUMEN</span>
+            <span>{{ $t("visor.summary", "RESUMEN") }}</span>
           </div>
 
           <div class="divider"></div>
 
           <div class="total-box">
-            <span class="total-label">TOTAL A PAGAR</span>
+            <span class="total-label">{{ $t("visor.totalToPay", "TOTAL A PAGAR") }}</span>
             <div class="total-amount-wrapper">
               <span class="amount">{{ totalPrecio.toFixed(2) }}</span>
               <span class="currency">€</span>
@@ -91,7 +125,7 @@
           </div>
 
           <div class="footer-msg">
-            <p>Gracias por su visita</p>
+            <p>{{ $t("visor.thankYouForVisiting", "Gracias por su visita") }}</p>
           </div>
         </div>
       </aside>
@@ -101,7 +135,7 @@
     <footer class="footer-bar">
       <div class="footer-clock">{{ currentTime }}</div>
       <div class="footer-branding">
-        <span>Desarrollado por</span>
+        <span>{{ $t("visor.developedBy", "Desarrollado por") }}</span>
         <img src="/img/logo-hitsystems.png" alt="Hit Systems" class="hit-logo" onerror="this.style.display='none'" />
       </div>
     </footer>
@@ -109,10 +143,10 @@
 </template>
 
 <script>
-import { ref, watch, nextTick } from 'vue'
+import { ref, watch, nextTick } from "vue";
 
 export default {
-  name: 'TicketScreen',
+  name: "TicketScreen",
   props: {
     logoTpv: Object,
     parametros: Object,
@@ -121,10 +155,10 @@ export default {
     totalUnidades: Number,
     orderedList: Array,
     totalPrecio: Number,
-    currentTicket: Object
+    currentTicket: Object,
   },
   setup(props) {
-    const cartList = ref(null)
+    const cartList = ref(null);
 
     // Scroll to top when items are added to the cart
     watch(
@@ -132,23 +166,23 @@ export default {
       () => {
         nextTick(() => {
           if (cartList.value) {
-            const scrollArea = cartList.value.querySelector('.scroll-area');
+            const scrollArea = cartList.value.querySelector(".scroll-area");
             if (scrollArea) {
               scrollArea.scrollTo({
                 top: 0,
-                behavior: 'smooth'
+                behavior: "smooth",
               });
             }
           }
         });
-      }
-    )
+      },
+    );
 
     return {
-      cartList
-    }
-  }
-}
+      cartList,
+    };
+  },
+};
 </script>
 
 <style scoped>
@@ -163,15 +197,17 @@ export default {
 
 /* Header Refinements */
 .header {
-  padding: 1.5rem 3rem;
+  height: 80px;
+  padding: 0 3rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-  background: rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  z-index: 10;
+  background: white;
+  border-bottom: 3px solid var(--hit-blue);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .brand {
@@ -230,26 +266,33 @@ export default {
   box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
 }
 
-.online { color: #10b981; }
-.offline { color: #ef4444; }
+.online {
+  color: #10b981;
+}
+.offline {
+  color: #ef4444;
+}
 
 @keyframes pulse {
-  0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
-  70% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+  0% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
 }
 
 /* Main Content Grid */
 .content-grid {
   flex: 1;
   display: grid;
-  grid-template-columns: 1fr 420px;
-  gap: 2.5rem;
-  padding: 2.5rem 3rem;
+  grid-template-columns: 1fr 400px;
+  gap: 2rem;
+  padding: 2rem 3rem;
   overflow: hidden;
-  max-width: 1800px;
-  margin: 0 auto;
-  width: 100%;
 }
 
 /* Items List Styling */
@@ -259,7 +302,7 @@ export default {
   background: white;
   border-radius: 24px;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
   border: 1px solid var(--glass-border);
 }
 
@@ -281,12 +324,12 @@ export default {
 }
 
 .count-badge {
-  background: rgba(245, 158, 11, 0.15);
-  color: var(--primary);
-  padding: 0.25rem 0.85rem;
-  border-radius: 100px;
+  background: var(--primary);
+  padding: 0.2rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: white;
   font-weight: 700;
-  font-size: 0.95rem;
 }
 
 .scroll-area {
@@ -297,7 +340,7 @@ export default {
 }
 
 .scroll-area::-webkit-scrollbar {
-  width: 6px;
+  display: none;
 }
 
 .scroll-area::-webkit-scrollbar-track {
@@ -308,39 +351,46 @@ export default {
   background: #cbd5e1;
   border-radius: 10px;
 }
-
 .items-grid {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.5rem;
 }
 
 /* Individual Item Card */
 .item-card {
-  background: #f8fafc;
-  border: 1px solid var(--glass-border);
-  border-radius: 16px;
-  padding: 1.25rem 1.5rem;
   display: flex;
-  gap: 1.5rem;
-  transition: transform 0.2s, box-shadow 0.2s;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.01);
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 0.75rem 1.25rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 20px;
+  border: 1px solid transparent;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .item-qty-circle {
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  background: white;
-  color: var(--primary);
+  min-width: 36px;
+  height: 36px;
+  padding: 0 6px;
+  background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(56, 189, 248, 0.1));
+  color: var(--hit-blue);
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 800;
-  font-size: 1.2rem;
-  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.15);
-  border: 1px solid rgba(245, 158, 11, 0.2);
-  flex-shrink: 0;
+  font-size: 1.1rem;
+  border: 1px solid rgba(14, 165, 233, 0.2);
+  word-break: break-all;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.item-qty-circle {
+  font-size: clamp(0.8rem, 2.5vw, 1.1rem);
+  max-width: 70px;
 }
 
 .item-info {
@@ -371,7 +421,6 @@ export default {
   white-space: nowrap;
 }
 
-/* Redesigned Integrated Sub-lists (Supplements & Promo Items) */
 .item-sub-list {
   margin-top: 0.5rem;
   padding-top: 0.5rem;
@@ -437,7 +486,7 @@ export default {
   height: 100%;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
 }
 
 .header-row {
@@ -528,7 +577,7 @@ export default {
 .hit-logo {
   height: 28px;
   width: auto;
-  filter: drop-shadow(0 0 2px rgba(255,255,255,0.2));
+  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.2));
 }
 
 .hit-text {
@@ -581,8 +630,13 @@ export default {
 
 /* Responsive adjustments */
 @media (max-width: 1200px) {
-  .amount { font-size: 4.5rem; }
-  .content-grid { grid-template-columns: 1fr 340px; padding: 1.5rem; }
+  .amount {
+    font-size: 4.5rem;
+  }
+  .content-grid {
+    grid-template-columns: 1fr 340px;
+    padding: 1.5rem;
+  }
 }
 
 @media (max-width: 900px) {
@@ -592,7 +646,7 @@ export default {
     overflow-y: auto;
     padding-bottom: 200px;
   }
-  .summary-panel { 
+  .summary-panel {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -600,23 +654,52 @@ export default {
     height: auto;
     z-index: 100;
   }
-  .summary-card { 
+  .summary-card {
     border-radius: 24px 24px 0 0;
     padding: 1.5rem 2rem;
   }
-  .amount { font-size: 4rem; }
-  .scroll-area { max-height: calc(100vh - 350px); }
-  .detail-line, .divider, .header-row, .footer-msg { display: none; }
+  .amount {
+    font-size: 4rem;
+  }
+  .scroll-area {
+    max-height: calc(100vh - 350px);
+  }
+  .detail-line,
+  .divider,
+  .header-row,
+  .footer-msg {
+    display: none;
+  }
 }
 
 @media (max-width: 480px) {
-  .header { padding: 1rem 1.5rem; }
-  .brand-text h1 { font-size: 1.2rem; }
-  .logo-icon { width: 36px; height: 36px; }
-  .logo-icon svg { width: 20px; height: 20px; }
-  .amount { font-size: 3rem; }
-  .content-grid { padding: 1rem; }
-  .item-name { font-size: 1.1rem; }
-  .item-qty-circle { width: 36px; height: 36px; font-size: 1rem; }
+  .header {
+    padding: 1rem 1.5rem;
+  }
+  .brand-text h1 {
+    font-size: 1.2rem;
+  }
+  .logo-icon {
+    width: 36px;
+    height: 36px;
+  }
+  .logo-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+  .amount {
+    font-size: 3rem;
+  }
+  .content-grid {
+    padding: 1rem;
+  }
+  .item-name {
+    font-size: 1.1rem;
+  }
+  .item-qty-circle {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
 }
 </style>

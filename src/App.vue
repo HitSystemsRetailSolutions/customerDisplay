@@ -52,6 +52,7 @@
 <script>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { io } from "socket.io-client"
+import { useI18n } from 'vue-i18n'
 import WelcomeScreen from './components/WelcomeScreen.vue'
 import TicketScreen from './components/TicketScreen.vue'
 import PaymentScreen from './components/PaymentScreen.vue'
@@ -66,6 +67,7 @@ export default {
     ThankYouScreen
   },
   setup() {
+    const { locale } = useI18n()
     const connected = ref(false)
     const currentTicket = ref({ lista: [] })
     const currentTime = ref('')
@@ -128,6 +130,9 @@ export default {
 
       socket.on("cargarParametros", (data) => {
         parametros.value = data;
+        if (data && data.idiomaTienda) {
+          locale.value = data.idiomaTienda.toLowerCase();
+        }
       });
 
       socket.on("cargarLogoTpv", (data) => {

@@ -7,14 +7,14 @@
           <polyline points="22 4 12 14.01 9 11.01"></polyline>
         </svg>
       </div>
-      <h1 class="welcome-title">¡Gracias por su visita!</h1>
-      <p class="welcome-subtitle">Esperamos verle pronto de nuevo.</p>
+      <h1 class="welcome-title">{{ $t('visor.thankYouForVisiting','¡Gracias por su visita!') }}</h1>
+      <p class="welcome-subtitle">{{ $t('visor.weHopeToSeeYouSoon','Esperamos verle pronto de nuevo.') }}</p>
     </div>
     <!-- Footer clock -->
     <div class="payment-footer">
       <div class="footer-clock">{{ currentTime }}</div>
       <div class="footer-branding">
-        <span>Desarrollado por</span>
+        <span>{{ $t('visor.developedBy','Desarrollado por') }}</span>
         <img src="/img/logo-hitsystems.png" alt="Hit Systems" class="hit-logo" onerror="this.style.display='none'" />
       </div>
     </div>
