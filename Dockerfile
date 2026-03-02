@@ -14,7 +14,7 @@ FROM nginx:alpine
 
 COPY --from=build-stage /usr/src/dist /usr/share/nginx/html
 
-EXPOSE 3002
+EXPOSE 3003
 
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
