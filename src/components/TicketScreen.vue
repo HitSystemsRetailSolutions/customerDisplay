@@ -639,7 +639,92 @@ export default {
   }
 }
 
-@media (max-width: 900px) {
+/* Small landscape screens (e.g., 800x480 customer displays) */
+@media (max-width: 900px) and (max-height: 600px) and (orientation: landscape) {
+  .header {
+    height: 60px;
+    padding: 0 1.5rem;
+  }
+  .brand-text h1 {
+    font-size: 1.2rem;
+  }
+  .brand-text p {
+    font-size: 0.8rem;
+  }
+  .logo-icon {
+    width: 36px;
+    height: 36px;
+  }
+  .logo-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+  .status-badge {
+    padding: 0.3rem 1rem;
+    font-size: 0.8rem;
+  }
+  .content-grid {
+    grid-template-columns: 1fr 280px;
+    padding: 1rem;
+    gap: 1rem;
+  }
+  .section-header {
+    padding: 0.75rem 1.25rem;
+  }
+  .section-header h2 {
+    font-size: 1.1rem;
+  }
+  .scroll-area {
+    padding: 0.75rem;
+  }
+  .item-card {
+    padding: 0.5rem 1rem;
+    gap: 0.75rem;
+  }
+  .item-name {
+    font-size: 1rem;
+  }
+  .item-subtotal {
+    font-size: 1.1rem;
+  }
+  .item-qty-circle {
+    min-width: 28px;
+    height: 28px;
+    font-size: 0.9rem;
+  }
+  .summary-card {
+    padding: 1.25rem;
+  }
+  .header-row {
+    margin-bottom: 1rem;
+    font-size: 0.7rem;
+  }
+  .divider {
+    margin-bottom: 1rem;
+  }
+  .amount {
+    font-size: 3rem;
+  }
+  .currency {
+    font-size: 1.5rem;
+  }
+  .footer-msg p {
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+  }
+  .footer-bar {
+    padding: 0.5rem 1.5rem;
+  }
+  .footer-clock {
+    font-size: 1.1rem;
+  }
+  .hit-logo {
+    height: 20px;
+  }
+}
+
+/* Vertical stacking for portrait or narrow mobile devices */
+@media (max-width: 900px) and (orientation: portrait), (max-width: 600px) {
   .content-grid {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr auto;

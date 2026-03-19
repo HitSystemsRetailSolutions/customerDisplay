@@ -290,6 +290,67 @@ export default {
   object-fit: contain;
 }
 
+/* Responsive for 800x480 landscape display */
+@media (max-width: 900px) and (max-height: 600px) and (orientation: landscape) {
+  .payment-content {
+    padding: 1rem;
+    gap: 0.5rem;
+  }
+  .payment-header {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  .payment-logo {
+    width: 45px;
+    height: 45px;
+    border-radius: 12px;
+  }
+  .payment-logo svg {
+    width: 24px;
+    height: 24px;
+  }
+  .payment-title {
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+  }
+  .payment-amount {
+    font-size: 5rem;
+  }
+  .payment-currency {
+    font-size: 2.5rem;
+  }
+  .payment-question {
+    font-size: 1.1rem;
+    margin-bottom: 0;
+  }
+  .payment-methods {
+    gap: 1rem;
+  }
+  .method-card {
+    padding: 0.75rem 1.5rem;
+    min-width: 120px;
+    gap: 0.5rem;
+    font-size: 1rem;
+  }
+  .method-icon {
+    width: 40px;
+    height: 40px;
+  }
+  .method-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+  .payment-footer {
+    padding: 0.5rem 1.5rem;
+  }
+  .payment-footer .footer-clock {
+    font-size: 1.1rem;
+  }
+  .hit-logo {
+    height: 20px;
+  }
+}
+
 @media (max-width: 480px) {
   .payment-amount { letter-spacing: -2px; }
 }

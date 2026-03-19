@@ -157,4 +157,36 @@ export default {
   height: 100%;
   object-fit: contain;
 }
+
+/* Responsive for 800x480 landscape display */
+@media (max-width: 900px) and (max-height: 600px) and (orientation: landscape) {
+  .welcome-content {
+    padding: 1.5rem;
+  }
+  .welcome-logo {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 1.5rem;
+  }
+  .welcome-logo svg {
+    width: 40px;
+    height: 40px;
+  }
+  .welcome-title {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  .welcome-subtitle {
+    font-size: 1.5rem;
+  }
+  .payment-footer {
+    padding: 0.5rem 1.5rem;
+  }
+  .payment-footer .footer-clock {
+    font-size: 1.1rem;
+  }
+  .hit-logo {
+    height: 20px;
+  }
+}
 </style>

@@ -140,4 +140,36 @@ export default {
   width: auto;
   filter: drop-shadow(0 0 2px rgba(255,255,255,0.2));
 }
+
+/* Responsive for 800x480 landscape display */
+@media (max-width: 900px) and (max-height: 600px) and (orientation: landscape) {
+  .thankyou-content {
+    padding: 1.5rem;
+  }
+  .success-checkmark {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 1.5rem;
+  }
+  .success-checkmark svg {
+    width: 45px;
+    height: 45px;
+  }
+  .welcome-title {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  .welcome-subtitle {
+    font-size: 1.5rem;
+  }
+  .payment-footer {
+    padding: 0.5rem 1.5rem;
+  }
+  .payment-footer .footer-clock {
+    font-size: 1.1rem;
+  }
+  .hit-logo {
+    height: 20px;
+  }
+}
 </style>
