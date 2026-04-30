@@ -78,7 +78,8 @@ export default {
     const modalPago = ref({
       activo: false,
       total: 0,
-      metodoPago: null // null | 'EFECTIVO' | 'TARJETA'
+      metodoPago: null, // null | 'EFECTIVO' | 'TARJETA'
+      propina: 0
     })
 
     // Estados de UI: 'WELCOME' | 'TICKET' | 'PAYMENT' | 'THANK_YOU'
@@ -179,7 +180,7 @@ export default {
       });
 
       // Modal de cobro: muestra pantalla de pago
-      socket.on("modalCobro", ({ total, metodoPago } = {}) => {
+      socket.on("modalCobro", ({ total, metodoPago, propina } = {}) => {
         if (thankYouTimeout) {
           clearTimeout(thankYouTimeout);
           thankYouTimeout = null;
@@ -188,7 +189,8 @@ export default {
         modalPago.value = {
           activo: true,
           total: typeof total === 'number' ? total : (parseFloat(total) || 0),
-          metodoPago: metodoPago || null
+          metodoPago: metodoPago || null,
+          propina: typeof propina === 'number' ? propina : (parseFloat(propina) || 0)
         };
       });
 

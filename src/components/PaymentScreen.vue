@@ -18,8 +18,21 @@
 
       <!-- Big price -->
       <div class="payment-price-wrap">
-        <span class="payment-amount">{{ modalPago.total.toFixed(2) }}</span>
-        <span class="payment-currency">€</span>
+        <div v-if="modalPago.propina > 0" class="payment-breakdown">
+          <div class="breakdown-item">
+            <span class="breakdown-label">{{ $t('visor.subtotal', 'Subtotal') }}</span>
+            <span class="breakdown-value">{{ modalPago.total.toFixed(2) }} €</span>
+          </div>
+          <div class="breakdown-item tip-row">
+            <span class="breakdown-label">{{ $t('visor.tip', 'Propina') }}</span>
+            <span class="breakdown-value">+ {{ modalPago.propina.toFixed(2) }} €</span>
+          </div>
+          <div class="breakdown-divider"></div>
+        </div>
+        <div class="price-main">
+          <span class="payment-amount">{{ (modalPago.total + modalPago.propina).toFixed(2) }}</span>
+          <span class="payment-currency">€</span>
+        </div>
       </div>
 
       <!-- Payment method options -->
@@ -143,9 +156,46 @@ export default {
 
 .payment-price-wrap {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  animation: priceIn 0.5s cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+
+.payment-breakdown {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.breakdown-item {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+.tip-row {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.breakdown-divider {
+  height: 1px;
+  background: var(--glass-border);
+  margin: 0.25rem 0;
+  width: 100%;
+}
+
+.price-main {
+  display: flex;
   align-items: baseline;
   gap: 1rem;
-  animation: priceIn 0.5s cubic-bezier(0.23, 1, 0.32, 1) both;
 }
 
 @keyframes priceIn {
