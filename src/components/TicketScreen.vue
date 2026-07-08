@@ -2,27 +2,14 @@
   <div class="normal-screen">
     <header class="header">
       <div class="brand">
-        <div class="logo-icon" :class="{ 'no-bg': logoTpv }">
-          <img v-if="logoTpv" :src="`data:image/${logoTpv.extension};base64,${logoTpv.archivo}`" class="hit-logo-img" />
-          <svg
-            v-else
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round">
-            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
-            <path d="M3 6h18"></path>
-            <path d="M16 10a4 4 0 0 1-8 0"></path>
-          </svg>
+        <div v-if="logoTpv" class="logo-icon" :class="{ 'no-bg': logoTpv }">
+          <img :src="`data:image/${logoTpv.extension};base64,${logoTpv.archivo}`" class="hit-logo-img" />
         </div>
         <div class="brand-text">
-          <h1>{{ parametros?.nombreTienda || parametros?.nombreEmpresa || $t("visor.myOrder", "Mi Pedido") }}</h1>
+          <h1>{{ displayName || $t("visor.myOrder", "Mi Pedido") }}</h1>
           <p>
             {{
-              parametros?.nombreTienda || parametros?.nombreEmpresa
+              displayName
                 ? $t("visor.customerDisplay", "Visor de Cliente")
                 : $t("visor.welcome", "Bienvenidos")
             }}
@@ -143,7 +130,7 @@
 </template>
 
 <script>
-import { ref, watch, nextTick } from "vue";
+import { ref, watch, nextTick, computed } from "vue";
 
 export default {
   name: "TicketScreen",
@@ -159,6 +146,11 @@ export default {
   },
   setup(props) {
     const cartList = ref(null);
+
+    const displayName = computed(() => {
+      if (props.parametros?.nombreEmpresa === 'Tena') return '365 Obrador';
+      return props.parametros?.nombreTienda || props.parametros?.nombreEmpresa;
+    });
 
     // Scroll to top when items are added to the cart
     watch(
@@ -180,6 +172,7 @@ export default {
 
     return {
       cartList,
+      displayName,
     };
   },
 };

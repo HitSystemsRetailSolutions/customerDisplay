@@ -1,15 +1,10 @@
 <template>
   <div class="welcome-screen">
     <div class="welcome-content">
-      <div class="logo-icon welcome-logo" :class="{ 'no-bg': logoTpv }">
-        <img v-if="logoTpv" :src="`data:image/${logoTpv.extension};base64,${logoTpv.archivo}`" class="hit-logo-img" />
-        <svg v-else viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
-          <path d="M3 6h18"></path>
-          <path d="M16 10a4 4 0 0 1-8 0"></path>
-        </svg>
+      <div v-if="logoTpv" class="logo-icon welcome-logo" :class="{ 'no-bg': logoTpv }">
+        <img :src="`data:image/${logoTpv.extension};base64,${logoTpv.archivo}`" class="hit-logo-img" />
       </div>
-      <h1 class="welcome-title">{{ $t('visor.welcomeTo','Bienvenidos a') }}<br/>{{ parametros?.nombreTienda || parametros?.nombreEmpresa || $t('visor.restaurant','nuestro restaurante') }}</h1>
+      <h1 class="welcome-title">{{ $t('visor.welcomeTo','Bienvenidos a') }}<br/>{{ displayName }}</h1>
       <p class="welcome-subtitle">{{ $t('visor.happyToServe','Estamos encantados de atenderle') }}</p>
     </div>
     <!-- Footer clock -->
@@ -38,6 +33,12 @@ export default {
     currentTime: {
       type: String,
       required: true
+    }
+  },
+  computed: {
+    displayName() {
+      if (this.parametros?.nombreEmpresa === 'Tena') return '365 Obrador';
+      return this.parametros?.nombreTienda || this.parametros?.nombreEmpresa || this.$t('visor.restaurant', 'nuestro restaurante');
     }
   }
 }

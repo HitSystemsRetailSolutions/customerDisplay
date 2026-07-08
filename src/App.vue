@@ -148,11 +148,13 @@ export default {
         }
         
         let targetCesta = null;
-        const directSales = arrayCestas.filter(c => c.modo === 'VENTA' && (c.indexMesa === null || c.indexMesa === undefined));
+        // Solo cestas de venta directa (sin mesa) que tengan artículos
+        const directSales = arrayCestas.filter(c => c.modo === 'VENTA' && (c.indexMesa === null || c.indexMesa === undefined) && c.lista && c.lista.length > 0);
         
         if (directSales.length > 0) {
            targetCesta = directSales.sort((a,b) => b.timestamp - a.timestamp)[0];
         } else {
+           // Fallback: cualquier cesta con artículos (mesas, otros modos...)
            targetCesta = arrayCestas
              .filter(c => c.lista && c.lista.length > 0)
              .sort((a,b) => b.timestamp - a.timestamp)[0];
