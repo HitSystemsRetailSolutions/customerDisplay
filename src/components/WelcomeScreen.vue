@@ -37,7 +37,7 @@ export default {
   },
   computed: {
     displayName() {
-      if (this.parametros?.nombreEmpresa === 'Tena') return '365 Obrador';
+      if (this.parametros?.nombreEmpresa?.toLowerCase() === 'tena') return '365 Obrador';
       return this.parametros?.nombreTienda || this.parametros?.nombreEmpresa || this.$t('visor.restaurant', 'nuestro restaurante');
     }
   }

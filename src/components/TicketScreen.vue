@@ -148,7 +148,7 @@ export default {
     const cartList = ref(null);
 
     const displayName = computed(() => {
-      if (props.parametros?.nombreEmpresa === 'Tena') return '365 Obrador';
+      if (props.parametros?.nombreEmpresa?.toLowerCase() === 'tena') return '365 Obrador';
       return props.parametros?.nombreTienda || props.parametros?.nombreEmpresa;
     });
 
