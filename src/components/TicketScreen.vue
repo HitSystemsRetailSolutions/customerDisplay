@@ -122,8 +122,7 @@
     <footer class="footer-bar">
       <div class="footer-clock">{{ currentTime }}</div>
       <div class="footer-branding">
-        <span>{{ $t("visor.developedBy", "Desarrollado por") }}</span>
-        <img src="/img/logo-hitsystems.png" alt="Hit Systems" class="hit-logo" onerror="this.style.display='none'" />
+        <span>{{ $t("visor.developedBy", "Desarrollado por") }} hitsystems.es</span>
       </div>
     </footer>
   </div>

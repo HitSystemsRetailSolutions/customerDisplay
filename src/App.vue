@@ -148,16 +148,32 @@ export default {
         }
         
         let targetCesta = null;
-        // Solo cestas de venta directa (sin mesa) que tengan artículos
-        const directSales = arrayCestas.filter(c => c.modo === 'VENTA' && (c.indexMesa === null || c.indexMesa === undefined) && c.lista && c.lista.length > 0);
+        const firstCesta = arrayCestas[0];
+        const idTrabajadorActivo = firstCesta ? firstCesta.idTrabajadorActivo : null;
+
+        if (idTrabajadorActivo !== null && idTrabajadorActivo !== undefined) {
+          // Buscamos la cesta del trabajador activo (en modo VENTA y sin mesa)
+          targetCesta = arrayCestas.find(c => c.trabajador === idTrabajadorActivo && c.modo === 'VENTA' && (c.indexMesa === null || c.indexMesa === undefined));
+          
+          // Si no la encontramos, buscamos cualquier cesta del trabajador activo
+          if (!targetCesta) {
+            targetCesta = arrayCestas.find(c => c.trabajador === idTrabajadorActivo);
+          }
+        }
         
-        if (directSales.length > 0) {
-           targetCesta = directSales.sort((a,b) => b.timestamp - a.timestamp)[0];
-        } else {
-           // Fallback: cualquier cesta con artículos (mesas, otros modos...)
-           targetCesta = arrayCestas
-             .filter(c => c.lista && c.lista.length > 0)
-             .sort((a,b) => b.timestamp - a.timestamp)[0];
+        // Fallback: si no hay trabajador activo o no se encontró cesta para él
+        if (!targetCesta) {
+          // Solo cestas de venta directa (sin mesa) que tengan artículos
+          const directSales = arrayCestas.filter(c => c.modo === 'VENTA' && (c.indexMesa === null || c.indexMesa === undefined) && c.lista && c.lista.length > 0);
+          
+          if (directSales.length > 0) {
+             targetCesta = directSales.sort((a,b) => b.timestamp - a.timestamp)[0];
+          } else {
+             // Fallback: cualquier cesta con artículos (mesas, otros modos...)
+             targetCesta = arrayCestas
+               .filter(c => c.lista && c.lista.length > 0)
+               .sort((a,b) => b.timestamp - a.timestamp)[0];
+          }
         }
 
         if (targetCesta) {
