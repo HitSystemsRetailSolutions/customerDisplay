@@ -152,12 +152,30 @@ export default {
         const idTrabajadorActivo = firstCesta ? firstCesta.idTrabajadorActivo : null;
 
         if (idTrabajadorActivo !== null && idTrabajadorActivo !== undefined) {
-          // Buscamos la cesta del trabajador activo (en modo VENTA y sin mesa)
-          targetCesta = arrayCestas.find(c => c.trabajador === idTrabajadorActivo && c.modo === 'VENTA' && (c.indexMesa === null || c.indexMesa === undefined));
-          
-          // Si no la encontramos, buscamos cualquier cesta del trabajador activo
+          // El trabajador puede estar trabajando en una mesa. No debemos
+          // descartar esas cestas: indexMesa forma parte de la cesta activa.
+          const cestasDelTrabajador = arrayCestas.filter(
+            c => c.trabajador === idTrabajadorActivo && c.modo === 'VENTA'
+          );
+
+          // Si hay varias asociadas, priorizamos la que tiene artículos y
+          // después la más recientemente actualizada.
+          const cestasDelTrabajadorConArticulos = cestasDelTrabajador
+            .filter(c => c.lista && c.lista.length > 0)
+            .sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+
+          targetCesta = cestasDelTrabajadorConArticulos[0] || cestasDelTrabajador[0] || null;
+
+          // Compatibilidad con otros modos de cesta del trabajador activo.
           if (!targetCesta) {
-            targetCesta = arrayCestas.find(c => c.trabajador === idTrabajadorActivo);
+            const otrasCestasDelTrabajador = arrayCestas
+              .filter(c => c.trabajador === idTrabajadorActivo)
+              .sort((a, b) => {
+                const aTieneArticulos = a.lista && a.lista.length > 0 ? 1 : 0;
+                const bTieneArticulos = b.lista && b.lista.length > 0 ? 1 : 0;
+                return bTieneArticulos - aTieneArticulos || (b.timestamp || 0) - (a.timestamp || 0);
+              });
+            targetCesta = otrasCestasDelTrabajador[0] || null;
           }
         }
         
